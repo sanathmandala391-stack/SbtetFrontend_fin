@@ -22,9 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-"engines": {
-  "node": "18.x"
-},
+"packageManager": "npm@10",
   "eslintConfig": {
     "extends": [
       "react-app"
