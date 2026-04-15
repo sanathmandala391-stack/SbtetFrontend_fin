@@ -1,0 +1,536 @@
+/* ============================================================
+
+   SBTET TELANGANA — DIPLOMA ATTENDANCE MANAGEMENT SYSTEM
+
+   Professional Government Portal — NIC Style
+
+   Font: Open Sans (Google Fonts)
+
+   Primary: #003580  Nav: #0057b8  Accent: #f47920
+
+   Clean, smooth, real government feel
+
+============================================================ */
+
+/* loader css*/
+/* .top-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.top-progress-bar::before {
+  content: "";
+  position: absolute;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: #1e73be;
+  animation: loadingMove 1.2s linear infinite;
+}
+
+@keyframes loadingMove {
+  0% { left: -40%; }
+  100% { left: 100%; }
+} */
+
+
+/* Top bar */
+#nprogress .bar {
+  background: #1e73be !important;
+  height: 3px !important;
+}
+
+/* Glow effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #1e73be, 0 0 5px #1e73be;
+}
+
+/* Remove spinner completely */
+#nprogress .spinner {
+  display: none !important;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap');
+
+
+
+:root {
+
+  --gov-primary:   #003580;
+
+  --gov-primary-d: #002560;
+
+  --gov-nav:       #0057b8;
+
+  --gov-nav-hover: #004a9e;
+
+  --gov-accent:    #f47920;
+
+  --gov-accent-d:  #d9640e;
+
+  --gov-green:     #1a7a3c;
+
+  --gov-red:       #c0392b;
+
+  --gov-yellow:    #f0a500;
+
+  --gov-white:     #ffffff;
+
+  --gov-bg:        #f0f2f5;
+
+  --gov-card:      #ffffff;
+
+  --gov-border:    #d0d7e2;
+
+  --gov-text:      #1c1c2e;
+
+  --gov-muted:     #5a6175;
+
+  --gov-light:     #8a94a6;
+
+
+
+  --font:     'Open Sans', Arial, Helvetica, sans-serif;
+
+
+  --radius:   4px;
+
+  --radius-lg: 8px;
+
+  --shadow:   0 1px 4px rgba(0,0,0,0.10);
+
+  --shadow-md:0 3px 12px rgba(0,0,0,0.12);
+
+  --shadow-lg:0 6px 24px rgba(0,0,0,0.14);
+
+  --transition: 0.22s ease;
+
+
+
+  /* Back-compat aliases */
+
+  --primary:    var(--gov-primary);
+
+  --accent:     var(--gov-accent);
+
+  --success:    var(--gov-green);
+
+  --danger:     var(--gov-red);
+
+  --border:     var(--gov-border);
+
+  --text:       var(--gov-text);
+
+  --text-muted: var(--gov-muted);
+
+  --bg:         var(--gov-bg);
+
+  --bg-card:    var(--gov-card);
+
+  --shadow-lg:  var(--shadow-lg);
+
+  --radius:     var(--radius);
+
+  --font-body:  var(--font);
+
+  --nav-h:      0px;
+
+  /* Back-compat color aliases used in faculty/hod pages */
+  --blue-dark:  #003366;
+  --orange:     #f47920;
+
+}
+
+
+
+/* ── Reset ── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 14px; }
+
+body {
+
+  font-family: var(--font);
+
+  background: var(--gov-bg);
+
+  color: var(--gov-text);
+
+  line-height: 1.55;
+
+  -webkit-font-smoothing: antialiased;
+
+}
+
+a { color: var(--gov-nav); text-decoration: none; }
+
+a:hover { text-decoration: underline; color: var(--gov-primary); }
+
+button { cursor: pointer; font-family: var(--font); }
+
+input, select, textarea { font-family: var(--font); outline: none; }
+
+h1,h2,h3,h4,h5,h6 { font-family: var(--font); font-weight: 700; color: var(--gov-primary); line-height: 1.3; }
+
+img { max-width: 100%; display: block; }
+
+
+
+/* ── Scrollbar ── */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+
+::-webkit-scrollbar-thumb { background: var(--gov-nav); border-radius: 3px; }
+
+::-webkit-scrollbar-track { background: var(--gov-bg); }
+
+
+
+/* ── Keyframes ── */
+
+@keyframes fadeUp    { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+@keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
+
+@keyframes spin      { to { transform:rotate(360deg); } }
+
+@keyframes slideLeft { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+
+@keyframes pulse     { 0%,100%{transform:scale(1);} 50%{transform:scale(1.04);} }
+
+
+
+.fade-in    { animation: fadeIn  0.35s ease both; }
+
+.fade-up    { animation: fadeUp  0.4s  ease both; }
+
+
+
+/* ── Spinner ── */
+
+.spinner {
+
+  width: 34px; height: 34px;
+
+  border: 3px solid var(--gov-border);
+
+  border-top-color: var(--gov-nav);
+
+  border-radius: 50%;
+
+  animation: spin 0.75s linear infinite;
+
+  display: inline-block;
+
+}
+
+
+
+/* ── Card ── */
+
+.card {
+
+  background: var(--gov-card);
+
+  border: 1px solid var(--gov-border);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+
+}
+
+
+
+/* ── Buttons ── */
+
+.btn {
+
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+
+  padding: 9px 22px; border-radius: var(--radius);
+
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+
+  border: 1px solid transparent; cursor: pointer;
+
+  transition: all var(--transition); white-space: nowrap;
+
+  letter-spacing: 0.2px; text-decoration: none;
+
+}
+
+.btn:hover { text-decoration: none; }
+
+.btn-primary { background: var(--gov-primary); color: #fff; border-color: var(--gov-primary); }
+
+.btn-primary:hover { background: var(--gov-primary-d); }
+
+.btn-nav    { background: var(--gov-nav); color: #fff; border-color: var(--gov-nav); }
+
+.btn-nav:hover { background: var(--gov-nav-hover); }
+
+.btn-accent { background: var(--gov-accent); color: #fff; border-color: var(--gov-accent); }
+
+.btn-accent:hover { background: var(--gov-accent-d); }
+
+.btn-success { background: var(--gov-green); color: #fff; border-color: var(--gov-green); }
+
+.btn-danger  { background: var(--gov-red);   color: #fff; border-color: var(--gov-red);   }
+
+.btn-outline {
+
+  background: transparent; color: var(--gov-primary); border-color: var(--gov-primary);
+
+}
+
+.btn-outline:hover { background: var(--gov-primary); color: #fff; }
+
+.btn-outline-white {
+
+  background: transparent; color: #fff; border-color: rgba(255,255,255,0.65);
+
+}
+
+.btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+
+.btn-lg { padding: 12px 30px; font-size: 14px; }
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+
+/* ── Form controls ── */
+
+.form-group   { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
+
+.form-label   { font-size: 12px; font-weight: 700; color: var(--gov-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.form-input,
+
+.form-select  {
+
+  width: 100%; padding: 9px 13px;
+
+  border: 1px solid var(--gov-border); border-radius: var(--radius);
+
+  font-family: var(--font); font-size: 13.5px; color: var(--gov-text);
+
+  background: #fff; transition: border-color var(--transition), box-shadow var(--transition);
+
+}
+
+.form-input:focus, .form-select:focus {
+
+  border-color: var(--gov-nav);
+
+  box-shadow: 0 0 0 3px rgba(0,87,184,0.12);
+
+}
+
+.form-select { cursor: pointer; }
+
+
+
+/* ── Grids ── */
+
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+
+@media(max-width:960px){ .grid-3,.grid-4{ grid-template-columns:repeat(2,1fr); } }
+
+@media(max-width:580px){ .grid-2,.grid-3,.grid-4{ grid-template-columns:1fr; } }
+
+
+
+/* ── Page wrapper ── */
+
+.page { padding: 24px 28px 56px; max-width: 1380px; margin: 0 auto; }
+
+@media(max-width:768px){ .page{ padding: 16px 14px 48px; } }
+
+
+
+/* ── Government table ── */
+
+.gov-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.gov-table th {
+
+  background: var(--gov-primary); color: #fff;
+
+  padding: 10px 14px; text-align: left; font-size: 11px;
+
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+
+  border-right: 1px solid rgba(255,255,255,0.12);
+
+}
+
+.gov-table td {
+
+  padding: 10px 14px; border-bottom: 1px solid var(--gov-border);
+
+  border-right: 1px solid #edf0f5; vertical-align: middle;
+
+}
+
+.gov-table tr:nth-child(even) td { background: #f7f9fc; }
+
+.gov-table tr:hover td { background: #edf3fb; transition: background 0.15s; }
+
+
+
+/* ── Section / page header strips ── */
+
+.page-strip {
+
+  background: var(--gov-primary); color: #fff;
+
+  padding: 11px 20px; font-size: 14.5px; font-weight: 700;
+
+  border-radius: var(--radius) var(--radius) 0 0;
+
+  display: flex; align-items: center; justify-content: space-between;
+
+  flex-wrap: wrap; gap: 10px; letter-spacing: 0.2px;
+
+}
+
+.breadcrumb-bar {
+
+  background: #e8edf5; padding: 7px 18px; font-size: 11.5px;
+
+  color: #5a6175; border-bottom: 1px solid var(--gov-border);
+
+  margin-bottom: 18px;
+
+}
+
+.breadcrumb-bar a { color: var(--gov-primary); font-weight: 600; }
+
+.breadcrumb-bar a:hover { text-decoration: underline; }
+
+
+
+.section-bar {
+
+  background: var(--gov-nav); color: #fff;
+
+  padding: 10px 18px; font-size: 13px; font-weight: 700;
+
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+
+}
+
+.section-bar a { color: rgba(255,255,255,0.82); font-size: 12px; font-weight: 600; }
+
+.section-bar a:hover { color: #fff; text-decoration: none; }
+
+
+
+/* ── Status badges ── */
+
+.badge {
+
+  display: inline-block; padding: 3px 10px; border-radius: 3px;
+
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+
+}
+
+.badge-approved { background: #e6f4ec; color: #1a7a3c; border: 1px solid #b2dfc2; }
+
+.badge-pending  { background: #fff7e0; color: #b07800; border: 1px solid #fce08a; }
+
+.badge-absent   { background: #fde8e8; color: #c0392b; border: 1px solid #f5b3b3; }
+
+.badge-present  { background: #e6f4ec; color: #1a7a3c; border: 1px solid #b2dfc2; }
+
+.badge-info     { background: #e3eefb; color: #0057b8; border: 1px solid #aacdef; }
+
+.badge-error    { background: #fff3e6; color: #c04a00; border: 1px solid #f5c89a; }
+
+
+
+/* ── Attendance day status ── */
+
+.status-P  { background:#e6f4ec; color:#1a7a3c; }
+
+.status-A  { background:#fde8e8; color:#c0392b; }
+
+.status-E  { background:#fff3e6; color:#c04a00; }
+
+.status-HD { background:#e3eefb; color:#0057b8; }
+
+.status-W  { background:#f2f4f7; color:#777; }
+
+.status-H  { background:#f3e8fb; color:#6a1b9a; }
+
+
+
+/* ── Stat card ── */
+
+.stat-card { background:#fff; border:1px solid var(--gov-border); border-radius:var(--radius); padding:20px 18px; display:flex; flex-direction:column; gap:5px; box-shadow:var(--shadow); }
+
+.stat-card-val   { font-size:34px; font-weight:800; color:var(--gov-primary); line-height:1; }
+
+.stat-card-label { font-size:11px; color:var(--gov-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; margin-top:4px; }
+
+
+
+/* ── Notice bars ── */
+
+.gov-notice {
+
+  padding: 11px 15px; border-radius: var(--radius);
+
+  border-left: 3px solid; font-size: 12.5px; line-height: 1.6;
+
+}
+
+.gov-notice.info    { background:#e3eefb; border-color:var(--gov-nav);    color:#003580; }
+
+.gov-notice.success { background:#e6f4ec; border-color:var(--gov-green);  color:#145c2c; }
+
+.gov-notice.warning { background:#fff7e0; border-color:var(--gov-yellow);  color:#7a5000; }
+
+.gov-notice.danger  { background:#fde8e8; border-color:var(--gov-red);    color:#8b1a1a; }
+
+
+
+/* ── Quick link ── */
+
+.quick-link {
+
+  display: flex; align-items: center; gap: 13px;
+
+  padding: 14px 18px; border: 1px solid var(--gov-border);
+
+  border-radius: var(--radius); background: #fff; color: var(--gov-text);
+
+  text-decoration: none; transition: border-color var(--transition), box-shadow var(--transition);
+
+}
+
+.quick-link:hover { border-color: var(--gov-nav); box-shadow: var(--shadow-md); text-decoration: none; color: var(--gov-primary); }
+
+.quick-link-icon  { width: 38px; height: 38px; background: #e3eefb; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gov-nav); }
+
+.quick-link-title { font-size: 13px; font-weight: 700; color: var(--gov-primary); }
+
+.quick-link-desc  { font-size: 11.5px; color: var(--gov-muted); margin-top: 2px; }
+
+.quick-link-arrow { margin-left: auto; color: var(--gov-nav); font-size: 18px; font-weight: 700; }

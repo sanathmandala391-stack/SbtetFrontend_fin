@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from 'react';
+import api from '../../utils/api';
+import toast from 'react-hot-toast';
+import './AdminPages.css';
+
+export default function AdminApprovals() {
+  const [pending, setPending] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = () => {
+    setLoading(true);
+    api.get('/admin/approvals').then(r => setPending(r.data)).finally(() => setLoading(false));
+  };
+  useEffect(load, []);
+
+  const handleAction = async (userId, isApproved) => {
+    try {
+      await api.put(`/admin/users/${userId}/approval`, { isApproved });
+      toast.success(isApproved ? 'User approved!' : 'User rejected.');
+      setPending(p => p.filter(u => (u.id||u._id) !== userId));
+    } catch { toast.error('Action failed.'); }
+  };
+
+  return (
+    <div className="page fade-in">
+      <div style={{ background:'#1a237e', color:'#fff', padding:'10px 18px', borderRadius:'4px 4px 0 0', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <span style={{ fontSize:15, fontWeight:700 }}> Pending Approvals — Admin</span>
+        <span style={{ background:'#e65100', color:'#fff', padding:'3px 12px', borderRadius:3, fontSize:12, fontWeight:700 }}>{pending.length} Pending</span>
+      </div>
+      <div style={{ background:'#e8eaf6', padding:'7px 16px', fontSize:12, color:'#546e7a', borderBottom:'1px solid #dee2e6', marginBottom:16 }}>
+        Home &rsaquo; Admin &rsaquo; Approvals
+      </div>
+
+      {loading
+        ? <div style={{ display:'flex', justifyContent:'center', padding:60 }}><div className="spinner"/></div>
+        : pending.length === 0
+          ? <div className="card" style={{ padding:56, textAlign:'center' }}>
+              <div style={{ fontSize:48, marginBottom:14 }}></div>
+              <h3 style={{ color:'#1a237e', marginBottom:6 }}>All Caught Up!</h3>
+              <p style={{ color:'#6c757d', fontSize:13 }}>No pending approvals at this time.</p>
+            </div>
+          : <div className="card" style={{ overflow:'auto' }}>
+              <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
+                <thead>
+                  <tr>
+                    {['#','Name','Role','College','Email','Department / PIN','Registered','Actions'].map((h,i) => (
+                      <th key={i} style={{ background:'#1a237e', color:'#fff', padding:'9px 12px', textAlign:'left', fontSize:11, textTransform:'uppercase', letterSpacing:0.4, fontWeight:700, borderRight:'1px solid #283593', whiteSpace:'nowrap' }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {pending.map((u,i) => (
+                    <tr key={u.id||u._id} style={{ borderBottom:'1px solid #dee2e6', background: i%2===0 ? '#fff' : '#f8f9fb' }}>
+                      <td style={{ padding:'9px 12px', color:'#6c757d' }}>{i+1}</td>
+                      <td style={{ padding:'9px 12px', fontWeight:700 }}>{u.name}</td>
+                      <td style={{ padding:'9px 12px' }}>
+                        <span style={{ background:'#fff8e1', color:'#c8a000', padding:'2px 9px', borderRadius:3, fontSize:11, fontWeight:700, border:'1px solid #ffe082' }}>
+                          {u.role?.toUpperCase()}
+                        </span>
+                      </td>
+                      <td style={{ padding:'9px 12px', fontSize:12 }}>{u.college?.collegeName||u.collegeCode||'—'}</td>
+                      <td style={{ padding:'9px 12px', fontSize:12 }}>{u.email}</td>
+                      <td style={{ padding:'9px 12px', fontSize:12 }}>{u.department||u.pinNumber||'—'}</td>
+                      <td style={{ padding:'9px 12px', fontSize:11, color:'#6c757d', whiteSpace:'nowrap' }}>
+                        {new Date(u.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}
+                      </td>
+                      <td style={{ padding:'9px 12px' }}>
+                        <div style={{ display:'flex', gap:6 }}>
+                          <button className="btn btn-success btn-sm" style={{ padding:'5px 12px', fontSize:11 }} onClick={() => handleAction(u.id||u._id, true)}> Approve</button>
+                          <button className="btn btn-danger btn-sm"  style={{ padding:'5px 12px', fontSize:11 }} onClick={() => handleAction(u.id||u._id, false)}> Reject</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+      }
+    </div>
+  );
+}

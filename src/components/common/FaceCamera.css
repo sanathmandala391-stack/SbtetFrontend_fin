@@ -1,0 +1,221 @@
+/* FaceCamera — Government style
+.face-camera-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; padding:18px; background:#fff; border:1px solid #dde1e7; border-radius:2px; } */
+
+
+
+/* ═══════════════════════════════════════════════
+   FaceCamera — Government Biometric Scanner UI
+   Green border = match, Red border = fail
+═══════════════════════════════════════════════ */
+
+.fc-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  font-family: 'Arial', sans-serif;
+}
+
+/* ── Outer container with status border ── */
+.fc-outer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 4px solid #90a4ae;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  background: #000;
+}
+
+/* Status border states */
+.fc-outer.state-loading  { border-color: #90a4ae; box-shadow: 0 0 0 3px rgba(144,164,174,0.2); }
+.fc-outer.state-scanning { border-color: #1565c0; box-shadow: 0 0 0 4px rgba(21,101,192,0.25); }
+.fc-outer.state-detected { border-color: #f9a825; box-shadow: 0 0 0 4px rgba(249,168,37,0.3); animation: pulse-yellow 2s ease infinite; }
+.fc-outer.state-success  { border-color: #2e7d32; box-shadow: 0 0 0 6px rgba(46,125,50,0.35); animation: pulse-green 1.2s ease 3; }
+.fc-outer.state-failed   { border-color: #c62828; box-shadow: 0 0 0 6px rgba(198,40,40,0.35); animation: pulse-red 1s ease 4; }
+
+@keyframes pulse-yellow {
+  0%,100% { box-shadow: 0 0 0 4px rgba(249,168,37,0.3); }
+  50%     { box-shadow: 0 0 0 8px rgba(249,168,37,0.12); }
+}
+@keyframes pulse-green {
+  0%,100% { box-shadow: 0 0 0 6px rgba(46,125,50,0.35); }
+  50%     { box-shadow: 0 0 0 14px rgba(46,125,50,0.12); }
+}
+@keyframes pulse-red {
+  0%,100% { box-shadow: 0 0 0 6px rgba(198,40,40,0.35); }
+  50%     { box-shadow: 0 0 0 14px rgba(198,40,40,0.12); }
+}
+
+/* ── Video feed ── */
+.fc-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  transform: scaleX(-1);
+  background: #000;
+}
+
+/* ── Canvas overlay for landmarks ── */
+.fc-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+/* ── Oval face guide ── */
+.fc-face-guide {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52%; height: 72%;
+  border: 2.5px dashed rgba(255,255,255,0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+}
+.fc-outer.state-detected .fc-face-guide { border-color: rgba(249,168,37,0.8); border-style: solid; }
+.fc-outer.state-success  .fc-face-guide { border-color: rgba(46,125,50,0.9);  border-style: solid; }
+.fc-outer.state-failed   .fc-face-guide { border-color: rgba(198,40,40,0.9);  border-style: solid; }
+
+/* ── Scan line animation ── */
+.fc-scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(21,101,192,0.8) 40%, #fff 50%, rgba(21,101,192,0.8) 60%, transparent 100%);
+  box-shadow: 0 0 10px rgba(21,101,192,0.5);
+  animation: scan 2.4s ease-in-out infinite;
+  z-index: 8;
+  pointer-events: none;
+}
+@keyframes scan {
+  0%   { top: 0;    opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ── Full-screen overlays ── */
+.fc-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  gap: 14px;
+}
+.fc-overlay-loading { background: rgba(0,0,0,0.72); }
+.fc-overlay-result  { background: rgba(0,0,0,0.45); }
+
+/* Loading spinner */
+.fc-spinner {
+  width: 48px; height: 48px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.fc-overlay-text {
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Big result icon */
+.fc-result-icon {
+  font-size: 80px;
+  line-height: 1;
+  animation: pop 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.fc-result-label {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.fc-result-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* ── Status bar (below video) ── */
+.fc-status-bar {
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 0 0 6px 6px;
+  border: 1px solid;
+  border-top: none;
+  transition: background 0.3s, color 0.3s;
+}
+.fc-status-loading  { background: #eceff1; color: #546e7a; border-color: #90a4ae; }
+.fc-status-scanning { background: #e3f2fd; color: #1565c0; border-color: #1565c0; }
+.fc-status-detected { background: #fffde7; color: #f57f17; border-color: #f9a825; }
+.fc-status-success  { background: #e8f5e9; color: #2e7d32; border-color: #2e7d32; }
+.fc-status-failed   { background: #ffebee; color: #c62828; border-color: #c62828; }
+
+/* ── Blink progress row ── */
+.fc-blink-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.fc-blink-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 64px;
+}
+.fc-blink-circle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 2.5px solid #d0d7e2;
+  background: #f5f7fa;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+.fc-blink-dot.done .fc-blink-circle {
+  border-color: #2e7d32;
+  background: #e8f5e9;
+}
+.fc-blink-label {
+  font-size: 10px; font-weight: 700;
+  color: #888; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.fc-blink-dot.done .fc-blink-label { color: #2e7d32; }
+
+.fc-blink-count {
+  font-size: 20px; font-weight: 800;
+  color: #1565c0; min-width: 44px; text-align: center;
+  background: #e3f2fd; border-radius: 6px; padding: 4px 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .fc-outer { max-width: 100%; }
+}
