@@ -31,7 +31,8 @@ import axios from 'axios';
 
 const api = axios.create({
   // This MUST match the /api prefix in your Java SecurityConfig
-  baseURL: 'https://sbtet-backend-1.onrender.com/api', 
+  // baseURL: 'https://sbtet-backend-1.onrender.com/api', 
+  baseURL:'http://localhost:8080/api',
   headers: { 'Content-Type': 'application/json' }
 });
 
